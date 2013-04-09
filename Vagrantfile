@@ -7,8 +7,10 @@ Vagrant.configure("2") do |config|
   # please see the online documentation at vagrantup.com.
 
   # Every Vagrant virtual environment requires a box to build off of.
-  config.vm.box = "a"
+  config.vm.box = "centos6_nginx_rails_passenger"
   config.vm.network :forwarded_port, guest: 80, host: 3000 
+  config.vm.provision :shell, :path => "bootstrap.sh"
+  #config.vm.network :bridged
 
   # The url from where the 'config.vm.box' box will be fetched if it
   # doesn't already exist on the user's system.
