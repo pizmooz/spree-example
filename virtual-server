@@ -89,6 +89,8 @@ class VirtualServer:
 
 	}
 
+	vs_path_prefix='/var/www/'
+
 	def __init__(self):
 
 		self.gen_default_data()
@@ -99,13 +101,13 @@ class VirtualServer:
 
 		
 		ret=subprocess.call( [ "/opt/nginx/sbin/nginx" ,  "-s" , "reload" ] )
-		if not ret:
+		if ret!=0:
 			raise "error communicating with nginx, ensure that nginx is running"
 
 
-	def configure(self,tp):
+	def gen_config(self,tp):
 		
-		F=open('./_nginx.conf','w')
+		F=open('./nginx.conf','w')
 
 		print self.__dict__
 
@@ -117,8 +119,7 @@ class VirtualServer:
 
 		curdir=os.getcwd()
 		self.name = os.path.basename(curdir)
-		self.root_path= curdir		
-
+		self.vs_path=os.path.join(self.vs_path_prefix,self.name)
 
 	def load_data(self):
 
@@ -155,11 +156,11 @@ class VirtualServer:
 				server_type='html'
 
 			if server_type in ('html','rails','node','php'):
-				VS.configure(server_type)
+				VS.gen_config(server_type)
 			else:
 				raise 'invalid server type'
 
-		elif command=='server':
+		elif command=='control':
 
 			try:
 				subcommand=command_list[1]
@@ -171,6 +172,9 @@ class VirtualServer:
 			else:
 				raise 'invalid subcommand'
 
+		elif command in ('start','stop','restart','status'):
+			VS.control(command)
+
 		else:
 
 			show_help()
@@ -178,7 +182,7 @@ class VirtualServer:
 	def start(self):
 		
 		try:
-			os.copy("./_nginx.conf","./nginx.conf")
+			os.symlink("./nginx.conf",self.root_path)
 		except:
 			print "could not access files, you may need to run init first , check your nginx.conf file name"
 
@@ -187,7 +191,7 @@ class VirtualServer:
 	def stop(self):
 		
 		try:
-			os.remove("./nginx.conf")
+			os.remove(self.root_path)
 		except:
 			print "could not access files, you may need to run init first , check your nginx.conf file name"
 
@@ -195,7 +199,7 @@ class VirtualServer:
 
 	def restart(self):
 		
-		self.reload()
+		self._nginx_reload()
 
 
 VS=VirtualServer()
