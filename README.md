@@ -1,8 +1,8 @@
 # Spree-Example
 
 This example project is two-fold(or more possibly)
-	* a ready to go base spree-container for development.
-	* to test a local vagrant environment.
+*	a ready to go base spree-container for development.
+*	to test a local vagrant environment.
 
 ## Local Development Summary:
 
@@ -25,7 +25,8 @@ clone the git repo:
 	git clone https://github.com/ginlane/spree-example.git
 ```
 [get vagrant] (http://docs.vagrantup.com/v2/installation/index.html)
-[acquaint yourself with the basics] (http://docs.vagrantup.com/v2/getting-started/index.html)
+
+[acquaint yourself with the basics] (http://docs.vagrantup.com/v2/getting-started/index.html)  
 
 add the vagrant box( the box is 680M so it will take a bit):
 ```shell
@@ -37,14 +38,15 @@ boot the vagrant box:
 vagrant up
 ```
 
-add 'spree.local' entry to hosts file:
+add 'spree.local' entry to /etc/hosts file:
 ```shell
-127.0.0.1 localhost localhost.localdomain spree.local' to /etc/hosts on your machine
+127.0.0.1 localhost localhost.localdomain spree.local
 ```
 
 now point your browser to [spree.local:3000] (http://spree.local:3000) 
-and you should see the spree server, if all is well there shouldn't be
-any other configuration than that.
+and you should see the spree server.
+
+That's it! If all is well there shouldn't be any other configuration than that.
 
 ## Some notes on the vagrant Environment
 
@@ -56,7 +58,8 @@ use `vagrant ssh` to ssh into virtual
 
 ## Spree
 
-[spree] (http://spreecommerce.com)
+[spree] (http://spreecommerce.com)  
+
 [spree-api] (http://api.spreecommerce.com)
 
 
